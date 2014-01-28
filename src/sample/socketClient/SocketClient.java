@@ -21,19 +21,22 @@ public class SocketClient extends Thread{
     private String host;
     private int port;
     private String id;
+    private String login;
+    private String pass;
     private PrintWriter out;
     private  BufferedReader in;
     private String EOL = "\n";
     private Controller controller;
-
-    public SocketClient(String host, int port, String id) {
+    private Socket socket;
+    private String positivLoginResult = "success";
+    public SocketClient(String host, int port, String login, String pass) {
         this.host = host;
         this.port = port;
-        this.id = id;
+        this.login = login;
+        this.pass = pass;
     }
 
     public void run() {
-        Socket socket = null;
         try {
             socket = new Socket(host, port);
             out = new PrintWriter(socket.getOutputStream(), true);
@@ -44,12 +47,46 @@ public class SocketClient extends Thread{
             return;
         }
         controller.showMessage("connection created");
+        boolean isLogIn =  login();
+        if(isLogIn){
+            controller.showMessage("LogIn ok");
+        } else {
+            controller.showMessage("LogIn failed!");
+            return;
+        }
         try {
             read();
         } catch (IOException e) {
             controller.showMessage("error by read from socket");
             controller.showMessage(e.getMessage());
         }
+    }
+
+    private boolean login(){
+        sendLoginData();
+        try {
+            socket.setSoTimeout(2000);
+            String loginAnswer = in.readLine();
+            Message answerMessage = XMLParser.getMessageFromXML(loginAnswer);
+            String result = answerMessage.get("result");
+            if(positivLoginResult.equals(result)){
+                id = answerMessage.get("id");
+                socket.setSoTimeout(0);
+                return true;
+            } else {
+                return false;
+            }
+        } catch (IOException e) {
+           return false;
+        }
+    }
+
+    private void sendLoginData() {
+        Message loginMessage = new Message();
+        loginMessage.set("login", login);
+        loginMessage.set("pass", pass);
+        out.println(loginMessage.getLoginDataAsXMLString() + EOL);
+        out.flush();
     }
 
     private void read() throws IOException {

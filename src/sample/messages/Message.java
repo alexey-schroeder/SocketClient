@@ -16,6 +16,12 @@ public class Message {
             "       <id>{$id}</id>" +
             "       <text>{$text}</text>" +
             "   </message>";
+
+    private String loginDataTemplate =  "<?xml version=\"1.0\" encoding=\"UTF-8\"?>" +
+            "<message>" +
+            "       <login>{$login}</login>" +
+            "       <pass>{$pass}</pass>" +
+            "   </message>";
     private HashMap<String, String> content;
 
     public Message() {
@@ -36,6 +42,10 @@ public class Message {
 
     public void set(String tagName, String tagValue) {
         content.put(tagName, tagValue);
+    }
+
+    public String getLoginDataAsXMLString(){
+        return  loginDataTemplate.replace("{$login}", content.get("login")).replace("{$pass}", content.get("pass"));
     }
 
     public String toXMLString() {

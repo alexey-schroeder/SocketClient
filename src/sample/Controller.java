@@ -12,7 +12,8 @@ public class Controller {
     public TextField outputFeld;
     public TextField host;
     public TextField port;
-    public TextField myId;
+    public TextField login;
+    public TextField pass;
     SocketClient socketClient;
     private String EOL = "\n";
     public void setSocketClient(SocketClient socketClient) {
@@ -22,8 +23,9 @@ public class Controller {
     public void onConnectClick(ActionEvent actionEvent) throws IOException {
         String hostName = host.getText();
         int portNummer = Integer.valueOf(port.getText());
-        String clientId = myId.getText();
-        SocketClient socketClient = new SocketClient(hostName, portNummer, clientId);
+        String clientLogin = login.getText();
+        String clientPass = pass.getText();
+        SocketClient socketClient = new SocketClient(hostName, portNummer, clientLogin, clientPass);
         setSocketClient(socketClient);
         socketClient.setController(this);
         socketClient.start();

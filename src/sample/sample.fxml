@@ -32,9 +32,18 @@
     </HBox>
     <HBox padding="$x1" prefHeight="28.0" prefWidth="200.0" spacing="10.0">
       <children>
-        <Label minWidth="-Infinity" prefWidth="47.0" text="my id" />
-        <TextField fx:id="myId" prefWidth="133.0" text="2" />
+        <Label minWidth="-Infinity" prefWidth="47.0" text="login" />
+        <TextField  fx:id="login" prefWidth="133.0" text="admin" />
       </children>
+    </HBox>
+    <HBox prefHeight="28.0" prefWidth="200.0" spacing="10.0">
+      <children>
+        <Label minWidth="-Infinity" prefWidth="47.0" text="pass" />
+        <TextField id="myId" fx:id="pass" prefWidth="133.0" text="admin" />
+      </children>
+      <padding>
+        <Insets left="10.0" fx:id="x1" />
+      </padding>
     </HBox>
     <Button mnemonicParsing="false" onAction="#onConnectClick" text="connect">
       <VBox.margin>

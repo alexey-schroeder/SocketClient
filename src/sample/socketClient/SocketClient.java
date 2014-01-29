@@ -20,7 +20,6 @@ import java.net.Socket;
 public class SocketClient extends Thread{
     private String host;
     private int port;
-    private String id;
     private String login;
     private String pass;
     private PrintWriter out;
@@ -70,7 +69,6 @@ public class SocketClient extends Thread{
             Message answerMessage = XMLParser.getMessageFromXML(loginAnswer);
             String result = answerMessage.get("result");
             if(positivLoginResult.equals(result)){
-                id = answerMessage.get("id");
                 socket.setSoTimeout(0);
                 return true;
             } else {
@@ -93,16 +91,17 @@ public class SocketClient extends Thread{
         while(true){
           String inputMessage =  in.readLine();
            Message message =  XMLParser.getMessageFromXML(inputMessage);
-          controller.showMessage(message.get("text"));
+          controller.showMessage("from " + message.get("idFrom") +  ": "  + message.get("text"));
         }
     }
 
-    public void writeMessageInSocket(String text){
+    public void writeMessageInSocket(String target, String text){
         Message message = new Message();
-        message.set("id", "1");
+        message.set("idTo", target);
+        message.set("idFrom", login);
         message.set("text", text);
         String xmlString =  message.toXMLString();
-        out.println(xmlString + EOL);
+        out.println(xmlString);
         out.flush();
         System.out.println("Message gesendet: " + xmlString);
     }

@@ -13,7 +13,8 @@ import java.util.HashMap;
 public class Message {
     public  String template = "<?xml version=\"1.0\" encoding=\"UTF-8\"?>" +
             "<message>" +
-            "       <id>{$id}</id>" +
+            "       <idFrom>{$idFrom}</idFrom>" +
+            "       <idTo>{$idTo}</idTo>" +
             "       <text>{$text}</text>" +
             "   </message>";
 
@@ -49,6 +50,8 @@ public class Message {
     }
 
     public String toXMLString() {
-       return template.replace("{$id}", content.get("id")).replace("{$text}", content.get("text"));
+       return template.replace("{$idFrom}", content.get("idFrom")).
+               replace("{$idTo}", content.get("idTo")).
+               replace("{$text}", content.get("text"));
     }
 }

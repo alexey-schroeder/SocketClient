@@ -9,11 +9,12 @@ import java.io.IOException;
 
 public class Controller {
     public TextArea inputArea;
-    public TextField outputFeld;
+    public TextArea outputArea;
     public TextField host;
     public TextField port;
     public TextField login;
     public TextField pass;
+    public TextField targetLogin;
     SocketClient socketClient;
     private String EOL = "\n";
     public void setSocketClient(SocketClient socketClient) {
@@ -35,7 +36,9 @@ public class Controller {
         inputArea.appendText(message + EOL);
     }
     public void onSendClick(ActionEvent actionEvent) {
-        String text = outputFeld.getText();
-        socketClient.writeMessageInSocket(text);
+        String text = outputArea.getText();
+        String target = targetLogin.getText();
+        socketClient.writeMessageInSocket(target, text);
+        outputArea.setText("");
     }
 }

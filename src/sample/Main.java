@@ -16,7 +16,7 @@ public class Main extends Application {
         Parent root = fxmlLoader.load(getClass().getResource("sample.fxml"));
          controller = fxmlLoader.getController();
         primaryStage.setTitle("SocketClient");
-        primaryStage.setScene(new Scene(root, 200, 400));
+        primaryStage.setScene(new Scene(root, 400, 600));
         primaryStage.show();
     }
 

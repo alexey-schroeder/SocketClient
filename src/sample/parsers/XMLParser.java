@@ -23,6 +23,7 @@ import java.util.logging.Logger;
 public class XMLParser {
     static public Message getMessageFromXML(String xmlAsString)
     {
+        System.out.println("xml: " + xmlAsString);
         DocumentBuilder newDocumentBuilder;
         try {
             newDocumentBuilder = DocumentBuilderFactory.newInstance().newDocumentBuilder();

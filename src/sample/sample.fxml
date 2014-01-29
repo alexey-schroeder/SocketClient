@@ -10,7 +10,7 @@
 <?import javafx.scene.layout.GridPane?>
 <?import javafx.scene.layout.VBox?>
 
-<VBox prefHeight="345.0" xmlns:fx="http://javafx.com/fxml/1" xmlns="http://javafx.com/javafx/2.2" fx:controller="sample.Controller">
+<VBox prefHeight="576.0000999999975" prefWidth="398.9998779296875" xmlns:fx="http://javafx.com/fxml/1" xmlns="http://javafx.com/javafx/2.2" fx:controller="sample.Controller">
   <children>
     <HBox prefHeight="31.0" prefWidth="200.0" spacing="10.0">
       <children>
@@ -33,7 +33,7 @@
     <HBox padding="$x1" prefHeight="28.0" prefWidth="200.0" spacing="10.0">
       <children>
         <Label minWidth="-Infinity" prefWidth="47.0" text="login" />
-        <TextField  fx:id="login" prefWidth="133.0" text="admin" />
+        <TextField fx:id="login" prefWidth="133.0" text="admin" />
       </children>
     </HBox>
     <HBox prefHeight="28.0" prefWidth="200.0" spacing="10.0">
@@ -51,7 +51,21 @@
       </VBox.margin>
     </Button>
     <TextArea fx:id="inputArea" prefWidth="200.0" wrapText="true" />
-    <TextField fx:id="outputFeld" prefWidth="200.0" />
+    <HBox prefHeight="31.0" prefWidth="399.0" spacing="10.0">
+      <children>
+        <Label text="Wem" />
+        <TextField fx:id="targetLogin" prefWidth="200.0" />
+      </children>
+      <padding>
+        <Insets left="10.0" fx:id="x1" />
+      </padding>
+    </HBox>
+    <HBox padding="$x1" prefHeight="149.0" prefWidth="399.0" spacing="10.0">
+      <children>
+        <Label text="message" />
+        <TextArea fx:id="outputArea" prefHeight="149.0" prefWidth="318.0" wrapText="true" />
+      </children>
+    </HBox>
     <Button mnemonicParsing="false" onAction="#onSendClick" text="Send">
       <VBox.margin>
         <Insets left="10.0" top="10.0" />

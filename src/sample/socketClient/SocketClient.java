@@ -24,7 +24,6 @@ public class SocketClient extends Thread{
     private String pass;
     private PrintWriter out;
     private  BufferedReader in;
-    private String EOL = "\n";
     private Controller controller;
     private Socket socket;
     private String positivLoginResult = "success";
@@ -64,7 +63,7 @@ public class SocketClient extends Thread{
     private boolean login(){
         sendLoginData();
         try {
-            socket.setSoTimeout(2000);
+//            socket.setSoTimeout(2000);
             String loginAnswer = in.readLine();
             Message answerMessage = XMLParser.getMessageFromXML(loginAnswer);
             String result = answerMessage.get("result");
@@ -83,7 +82,7 @@ public class SocketClient extends Thread{
         Message loginMessage = new Message();
         loginMessage.set("login", login);
         loginMessage.set("pass", pass);
-        out.println(loginMessage.getLoginDataAsXMLString() + EOL);
+        out.println(loginMessage.getLoginDataAsXMLString());
         out.flush();
     }
 

@@ -27,6 +27,7 @@ public class SocketClient extends Thread{
     private Controller controller;
     private Socket socket;
     private String positivLoginResult = "success";
+    private boolean quit;
     public SocketClient(String host, int port, String login, String pass) {
         this.host = host;
         this.port = port;
@@ -52,12 +53,7 @@ public class SocketClient extends Thread{
             controller.showMessage("LogIn failed!");
             return;
         }
-        try {
             read();
-        } catch (IOException e) {
-            controller.showMessage("error by read from socket");
-            controller.showMessage(e.getMessage());
-        }
     }
 
     private boolean login(){
@@ -86,11 +82,30 @@ public class SocketClient extends Thread{
         out.flush();
     }
 
-    private void read() throws IOException {
-        while(true){
-          String inputMessage =  in.readLine();
-           Message message =  XMLParser.getMessageFromXML(inputMessage);
-          controller.showMessage("from " + message.get("idFrom") +  ": "  + message.get("text"));
+    private void read() {
+        while(!quit){
+            String inputMessage = null;
+            try {
+                inputMessage = in.readLine();
+                if(!quit){
+                Message message =  XMLParser.getMessageFromXML(inputMessage);
+                controller.showMessage("from " + message.get("idFrom") +  ": "  + message.get("text"));
+                }
+            } catch (IOException e) {
+                try {
+                    controller.showMessage("error by read from socket");
+                    controller.showMessage(e.getMessage());
+                    socket.close();
+                } catch (IOException e1) {
+                    controller.showMessage(e.getMessage());
+                }
+            }
+
+        }
+        try {
+            socket.close();
+        } catch (IOException e) {
+            controller.showMessage(e.getMessage());
         }
     }
 
@@ -107,5 +122,14 @@ public class SocketClient extends Thread{
 
     public void setController(Controller controller) {
         this.controller = controller;
+    }
+
+    public void stopSocketClient(){
+        quit = true;
+        try {
+            socket.close();
+        } catch (IOException e) {
+            e.printStackTrace();  //To change body of catch statement use File | Settings | File Templates.
+        }
     }
 }

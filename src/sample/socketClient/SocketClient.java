@@ -39,6 +39,7 @@ public class SocketClient extends Thread {
     public void run() {
         try {
             socket = new Socket(host, port);
+            System.out.println("Connection created");
             out = new PrintWriter(socket.getOutputStream(), true);
             in = new BufferedReader(new InputStreamReader(socket.getInputStream()));
         } catch (IOException e) {

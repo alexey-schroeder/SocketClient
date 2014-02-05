@@ -1,5 +1,6 @@
 package sample;
 
+import javafx.application.Platform;
 import javafx.event.ActionEvent;
 import javafx.scene.control.TextArea;
 import javafx.scene.control.TextField;
@@ -33,8 +34,14 @@ public class Controller {
         socketClient.start();
     }
 
-    public void showMessage(String message) {
-        inputArea.appendText(message + EOL);
+    public void showMessage(final String message) {
+        Platform.runLater(new Runnable() {
+            @Override
+            public void run() {
+                inputArea.appendText(message + EOL);
+            }
+        });
+
     }
 
     public void onSendClick(ActionEvent actionEvent) {

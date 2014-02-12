@@ -8,10 +8,12 @@ import org.w3c.dom.Document;
 import org.w3c.dom.Element;
 import org.w3c.dom.Node;
 import org.w3c.dom.NodeList;
+import org.xml.sax.SAXException;
 import sample.messages.Message;
 
 import javax.xml.parsers.DocumentBuilder;
 import javax.xml.parsers.DocumentBuilderFactory;
+import javax.xml.parsers.ParserConfigurationException;
 import java.io.ByteArrayInputStream;
 import java.util.logging.Level;
 import java.util.logging.Logger;
@@ -42,5 +44,29 @@ public class XMLParser {
             Logger.getLogger(XMLParser.class.getName()).log(Level.SEVERE, null, ex);
         }
         return null;
+    }
+
+    public  static boolean isValid(String xmlAsString){
+        if(xmlAsString.isEmpty()){
+            return false;
+        }
+        DocumentBuilder newDocumentBuilder;
+        try {
+            newDocumentBuilder = DocumentBuilderFactory.newInstance().newDocumentBuilder();
+        } catch (ParserConfigurationException e) {
+            return false;
+        }
+        Document xmlDocument = null;
+        try {
+            xmlDocument = newDocumentBuilder.parse(new ByteArrayInputStream(xmlAsString.getBytes()));
+        } catch (SAXException e) {
+            System.out.println("XML is not valid: " + xmlAsString);
+            return false;
+        } catch (Exception e) {
+            System.out.println("Unbekanntes Fehler (Vermutlich ein Umlaut-Zeichen in XML)");
+            return false;
+        }
+        Element root =  xmlDocument.getDocumentElement();
+        return true;
     }
 }

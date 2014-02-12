@@ -90,8 +90,12 @@ public class SocketClient extends Thread {
             try {
                 inputMessage = in.readLine();
                 if (!quit) {
+                    if(XMLParser.isValid(inputMessage)){
                     Message message = XMLParser.getMessageFromXML(inputMessage);
                     controller.showMessage("from " + message.get("idFrom") + ": " + message.get("text"));
+                    } else {
+                        controller.showMessage("es wurde eine invalide XML bekommen");
+                    }
                 }
             } catch (IOException e) {
                 try {
